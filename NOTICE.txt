@@ -1,2 +1,15 @@
 dimpleDemos
 Copyright 2012 Analog Devices Inc.
+
+These demos include the following:
+
+=======================================================
+Optical Flow Data
+Used for the Optical Flow algorithm
+vision.middlebury.edu/flow/
+http://vision.middlebury.edu/flow/floweval-ijcv2011.pdf
+
+=======================================================
+Stereovision math
+S. Birchfield and C. Tomasi, “A Pixel Dissimilarity Measure that Is
+Insensitive to Image Sampling,” IEEE Trans. Patter
