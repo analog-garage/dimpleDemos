@@ -19,10 +19,10 @@ function [im1,im2,numHsp,numWsp] = BuildData(do_dither, dscale,do_crop,...
 
     images = cell(4,1);
 
-    for i = 1:4
+    for i = 1:2
         x = imread(sprintf('eval-data-gray/Pen/Pen%d.jpg',i));
         g = mean(x,3);
-        g = g(550:1350,1200:2000);
+        g = g(500:1200,1200:1900);
         images{i} = g;
         %imagesc(g);
         %colormap('gray');

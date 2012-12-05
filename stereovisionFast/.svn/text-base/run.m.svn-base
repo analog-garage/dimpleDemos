@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%   Copyright 2012 Analog Devices, Inc.
+%
+%   Licensed under the Apache License, Version 2.0 (the "License");
+%   you may not use this file except in compliance with the License.
+%   You may obtain a copy of the License at
+%
+%       http://www.apache.org/licenses/LICENSE-2.0
+%
+%   Unless required by applicable law or agreed to in writing, software
+%   distributed under the License is distributed on an "AS IS" BASIS,
+%   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+%   See the License for the specific language governing permissions and
+%   limitations under the License.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Set parameters
+iterations = 20;
+depth = 75;
+data_set = 'art_scaled';
+width = 4;
+height = width;
+solver = 'sumproduct';
+k = 5;
+
+%Create the factor graph
+tic
+[fg, variables] = stereovision(depth,data_set,width,height,solver,k);
+toc
+
+% Solve using iterate so we can print out the iteration number
+disp('solving...');
+fg.initialize();
+tic
+for i = 1:iterations
+   fprintf('iteration %d\n',i);
+   fg.Solver.iterate(); 
+end
+toc
+
+%Display the results.
+
+output = uint8(variables.Value);
+
+
+%The following code attempts to threshold outliers
+values = sort(unique(output));
+percent = .02;
+total = 1;
+
+for i = 1:length(values)
+    v = values(i);
+    current_percent = numel(find(output >= v)) / numel(output);
+    if current_percent < percent;
+       output(output >= v) = v;
+       break;
+    end
+end
+
+%Finally we show the image
+imagesc(output);
+

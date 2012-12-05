@@ -68,9 +68,11 @@ for i=1:N
 end
 
 %% Run EM
+disp('running EM...');
 fg.baumWelch({guessT,guessE},numRestarts,numReEstimations);
 
 %% Examine results
+disp('results...');
 finalT=full(sparse(guessT.Indices(:,1)+1,guessT.Indices(:,2)+1,guessT.Weights));
 finalE=full(sparse(guessE.Indices(:,1)+1,guessE.Indices(:,2)+1,guessE.Weights));
 

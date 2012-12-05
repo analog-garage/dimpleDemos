@@ -29,7 +29,7 @@ sigmaD = 8;
 sigmaF = 1;
 
 %Things to affect speed vs accuracy
-max_pixel_distance = 4;
+max_pixel_distance = 5;
 super_pixel_width = 10;
 numiters = 100;
 k = 5000;
@@ -79,8 +79,8 @@ drawnow();
     do_synthetic,super_pixel_width,cropx,cropy,cropwidth,cropheight);
 
 figure(1);
+imagesc(im1);
 colormap('gray');
-image(im1);
 title('The original image');
 drawnow();
 
@@ -90,29 +90,19 @@ title('image difference');
 
 
 %%%%%%%%%%%%%%%%% Create the Graph %%%%%%%%%%%%%%%%%%%%
+args = java.util.HashMap();
+args.put('offsets',offsets);
+args.put('solver',solver);
+args.put('numHsp',numHsp);
+args.put('numWsp',numWsp);
+args.put('doSimilarity','do_similarity');
+args.put('k',k);
+args.put('ep',ep);
+args.put('sigmaP',sigmaP);
 
-domain = num2cell(offsets,2);
+[fg, sps] = BuildOpticalFlowGraph(args);
 
-fg = FactorGraph();
-fg.Solver = solver;
-
-%create variables
-sps = Discrete(domain,numHsp,numWsp);
-
-%create index variables
-spsi = Discrete((1:numvalues)',numHsp,numWsp);
-ft = FactorTable(repmat((0:(numvalues-1))',1,2),ones(numvalues,1),sps.Domain,spsi.Domain);
-fg.addFactorVectorized(ft,sps,spsi);
-
-
-%generate similarity factors
-rho_p_ = @(x,y) rho_p(x,y,ep,sigmaP);
-if do_similarity
-    fh = fg.addFactorVectorized(rho_p_,sps(1:(end-1),:),sps(2:end,:));
-    fv = fg.addFactorVectorized(rho_p_,sps(:,1:(end-1)),sps(:,2:end));
-    fh.VectorObject.invokeSolverMethod('setK',uint32(k));
-    fv.VectorObject.invokeSolverMethod('setK',uint32(k));
-end
+%%%%%%%%%%%%%%%%% Assign inputs %%%%%%%%%%%%%%%%%%%%
 
 %generate inputs
 disp('Setting inputs...');
@@ -147,12 +137,14 @@ fg.initialize();
 
 for i = 1:numiters
     disp(['iteration ' num2str(i) '...']);
+    tic
     fg.Solver.iterate();
+    toc
     
     %display the graph
     figure(5);
     colormap(rgb);
-    tmp = spsi.Value;
+    tmp = cell2mat(sps.invokeSolverMethodWithReturnValue('getValueIndex'))+1;
     image(tmp);
     title('Current best');
     drawnow();
