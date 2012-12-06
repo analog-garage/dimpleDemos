@@ -1,6 +1,6 @@
 dimpleDemos
 ===========
 
-This repository is meant to provide interesting uses of Dimple.  We could have included these demos
-directly in the dimple source tree but we wanted to avoid creating a large Dimple repository and most
-interesting demos require large data sets.
+This repository is meant to provide interesting Dimple demos.  We could have included these demos directly in the dimple source tree but we wanted to avoid creating a large Dimple repository and most interesting demos require large data sets.
+
+See the demos directory in the dimple repository for the rest of the demos.
