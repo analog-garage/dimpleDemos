@@ -79,6 +79,9 @@ disp('Gibbs sampler parameter estimation');
 disp('******************************************************************');
 fg = FactorGraph();
 fg.Solver = 'gibbs';
+fg.Solver.setNumSamples(numSamples);
+fg.Solver.setScansPerSample(scansPerSample);
+fg.Solver.setBurnInScans(burnInScans);
 
 % Variables
 A = Real(numStates, numStates);                 % Negative log of transition matrix values
@@ -88,7 +91,7 @@ state = Discrete(0:numStates-1,1,hmmLength);    % State variables
 A.Input = com.analog.lyric.dimple.FactorFunctions.NegativeExpGamma(1,1);
 
 % Add transition factors
-transitionFunction = com.analog.lyric.dimple.FactorFunctions.ParameterizedDiscreteTransition(numStates);
+transitionFunction = com.analog.lyric.dimple.FactorFunctions.DiscreteTransition(numStates);
 fg.addFactorVectorized(transitionFunction, state(2:end), state(1:end-1), {A,[]});
 
 % Add observation factors
@@ -102,9 +105,6 @@ if (repeatable)
 end
 
 % Solve
-fg.Solver.setNumSamples(numSamples);
-fg.Solver.setScansPerSample(scansPerSample);
-fg.Solver.setBurnInScans(burnInScans);
 disp('Starting Gibbs solver');
 t = tic;
 fg.solve();
