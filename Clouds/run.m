@@ -1,3 +1,4 @@
+%% Add the EdgeFactorFunction java class to the path. 
 javaaddpath('./bin');
 
 %% Set parameters
