@@ -8,7 +8,7 @@ public class EdgeFactorFunction extends FactorFunction
 
 	public EdgeFactorFunction() 
 	{
-		super("Horizontal Factor Function");
+		super("Edge Factor Function");
 		
 	}
 	
@@ -46,12 +46,10 @@ public class EdgeFactorFunction extends FactorFunction
 		if (ind > distribution.length-1)
 			ind = distribution.length-1;
 		
-		//return top[0][0];
 		if (useDist)
 			return -Math.log(distribution[ind]);
 		else
 			return diff;
-		//return -Math.log(distribution[ind]);
 		
 	}
 
