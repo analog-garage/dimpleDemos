@@ -88,10 +88,10 @@ A = Real(numStates, numStates);                 % Negative log of transition mat
 state = Discrete(0:numStates-1,1,hmmLength);    % State variables
 
 % Priors on A (equivalent to Dirichlet prior)
-A.Input = com.analog.lyric.dimple.FactorFunctions.NegativeExpGamma(1,1);
+A.Input = com.analog.lyric.dimple.factorfunctions.NegativeExpGamma(1,1);
 
 % Add transition factors
-transitionFunction = com.analog.lyric.dimple.FactorFunctions.DiscreteTransition(numStates);
+transitionFunction = com.analog.lyric.dimple.factorfunctions.DiscreteTransition(numStates);
 fg.addFactorVectorized(transitionFunction, state(2:end), state(1:end-1), {A,[]});
 
 % Add observation factors

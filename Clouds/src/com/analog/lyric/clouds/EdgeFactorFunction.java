@@ -1,7 +1,7 @@
 package com.analog.lyric.clouds;
 
-import com.analog.lyric.dimple.FactorFunctions.core.FactorFunction;
-import com.analog.lyric.dimple.FactorFunctions.core.FactorFunctionUtilities;
+import com.analog.lyric.dimple.factorfunctions.core.FactorFunction;
+import com.analog.lyric.dimple.factorfunctions.core.FactorFunctionUtilities;
 
 public class EdgeFactorFunction extends FactorFunction 
 {
