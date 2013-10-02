@@ -32,7 +32,7 @@ map.put('dataset', 'art_scaled');  % Source image pair
 
 % Set solver and solver-specific parameters
 fg.Solver = solver;
-fg.Solver.setNumIterations(iterations);
+fg.Solver.setNumIterations(1);
 
 % Solve
 fprintf('Starting solver (BP)\n');
@@ -41,9 +41,12 @@ if (~showIntermedateResults)  % Solve without showing intermediate results
     fg.solve();
 else                          % Solve showing intermediate results
     fg.initialize();
+    fg.Solver.setNumThreads(8);
     for i=1:iterations
         fprintf('Iteration: %d\n', i);
+        tic
         fg.Solver.iterate();
+        toc
         output = variables.Value;
         show(output * 2, 'BP');
     end

@@ -46,9 +46,12 @@ if (~showIntermedateResults)  % Solve without showing intermediate results
 else                          % Solve showing intermediate results
     fg.initialize();
     fg.Solver.burnIn();
+   
     for i=1:numSamples
         fprintf('Sample: %d\n', i);
+        tic
         fg.Solver.sample();
+        toc
         output = variables.Value;
         show(output * 2, 'Gibbs');
     end
