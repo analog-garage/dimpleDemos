@@ -17,16 +17,16 @@
 function run()
 
 % Graph parameters
-numStates = 2;                      % Number of states in the HMM
-numObsValues = 2;                   % Number of states in the observed value
-hmmLength = 10000;                  % Length of the HMM
+numStates = 4;                      % Number of states in the HMM
+numObsValues = 4;                   % Number of states in the observed value
+hmmLength = 2000;                   % Length of the HMM
 repeatable = false;                 % Make this run repeat all the same random values
+plotScore = false;                  % For Gibbs solver, plot score as a function of sample
 
 % Gibbs solver parameters
 numSamples = 100;                   % Total number of Gibbs samples to run
-proposalStandardDeviation = 0.1;    % Proposal standard deviation for parameter variables
 scansPerSample = 1;                 % Number of scans (one update of all variables) per sample
-burnInScans = 100;                  % Number of burn-in scans before sampling
+burnInScans = 0;                    % Number of burn-in scans before sampling
 
 % Baum-Welch parameters
 numReEstimations = 20;
@@ -84,21 +84,21 @@ fg.Solver.setScansPerSample(scansPerSample);
 fg.Solver.setBurnInScans(burnInScans);
 
 % Variables
-A = Real(numStates, numStates);                 % Negative log of transition matrix values
+A = RealJoint(numStates, 1, numStates);         % Transition matrix
 state = Discrete(0:numStates-1,1,hmmLength);    % State variables
 
-% Priors on A (equivalent to Dirichlet prior)
-A.Input = com.analog.lyric.dimple.factorfunctions.NegativeExpGamma(1,1);
+% Prior on columns of A
+A.Input = FactorFunction('Dirichlet',ones(1,numStates));
 
 % Add transition factors
-transitionFunction = com.analog.lyric.dimple.factorfunctions.DiscreteTransition(numStates);
-fg.addFactorVectorized(transitionFunction, state(2:end), state(1:end-1), {A,[]});
+fg.addFactorVectorized('DiscreteTransition', state(2:end), state(1:end-1), {A,[]});
 
 % Add observation factors
 state.Input = obsMatrix(obsRealization,:);
 
-% Set proposal standard deviation for real variables
-A.invokeSolverMethod('setProposalStandardDeviation', proposalStandardDeviation);
+if (plotScore)
+    fg.Solver.saveAllScores();  % Save scores
+end
 
 if (repeatable)
     fg.Solver.setSeed(1);		% Make the Gibbs solver repeatable
@@ -113,8 +113,6 @@ fprintf('Solve time: %.2f seconds\n', st);
 
 % Get the estimated transition matrix
 output = cell2mat(A.invokeSolverMethodWithReturnValue('getBestSample'));
-output = output - repmat(min(output,[],1),numStates,1);
-output = exp(-output);
 output = output./repmat(sum(output,1),numStates,1);
 disp('Gibbs estimate:'); disp(output);
 
@@ -122,6 +120,9 @@ disp('Gibbs estimate:'); disp(output);
 KLDivergenceRate = kLDivergenceRate(transMatrix, output);
 fprintf('Gibbs KL divergence rate: %f\n\n', KLDivergenceRate);
 
+if (plotScore)
+    figure; plot(fg.Solver.getAllScores); drawnow;
+end
 
 
 %**************************************************************************
