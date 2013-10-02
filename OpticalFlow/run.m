@@ -30,7 +30,7 @@ sigmaF = 1;
 
 %Things to affect speed vs accuracy
 max_pixel_distance = 5;
-super_pixel_width = 10;
+super_pixel_width = 8;
 numiters = 100;
 k = 5000;
 offset_scale = 1;
@@ -133,6 +133,7 @@ drawnow();
 
 disp('solving...');
 fg.Solver.setDamping(damping);
+fg.Solver.setNumThreads(8);
 fg.initialize();
 
 for i = 1:numiters
