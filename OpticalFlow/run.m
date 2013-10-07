@@ -133,7 +133,7 @@ drawnow();
 
 disp('solving...');
 fg.Solver.setDamping(damping);
-fg.Solver.setNumThreads(8);
+fg.Solver.useMultithreading(true);
 fg.initialize();
 
 for i = 1:numiters

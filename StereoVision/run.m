@@ -41,7 +41,7 @@ if (~showIntermedateResults)  % Solve without showing intermediate results
     fg.solve();
 else                          % Solve showing intermediate results
     fg.initialize();
-    fg.Solver.setNumThreads(8);
+    fg.Solver.useMultithreading(true);
     for i=1:iterations
         fprintf('Iteration: %d\n', i);
         tic

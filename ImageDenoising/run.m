@@ -68,7 +68,9 @@ t=tic;
 if (~showIntermedateResults)  % Solve without showing intermediate results
     fg.solve();
 else                          % Solve showing intermediate results
+    fg.Solver.useMultithreading(true);
     fg.initialize();
+    
     for i=1:iterations
         fprintf('Iteration: %d\n', i);
         fg.Solver.iterate();

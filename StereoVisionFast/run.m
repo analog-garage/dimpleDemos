@@ -99,7 +99,7 @@ variables.Input = input;
 % Solve using iterate so we can print out the iteration number
 disp('solving...');
 fg.initialize();
-fg.Solver.setNumThreads(8);
+fg.Solver.useMultithreading(true);
 for i = 1:iterations
     fprintf('iteration %d\n',i);
     tic
