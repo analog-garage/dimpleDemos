@@ -66,7 +66,7 @@ varPatches = repmat(tempVar,[blockCols,blockRows,xBlockSize*yBlockSize]);
 blockOffset = 1;
 for yb = 0:yBlockSize-1
     for xb = 0:xBlockSize-1
-        varPatches(:,:,blockOffset) = Vs(xb+xList,yb+yList);
+        varPatches(:,:,blockOffset) = Vs(yb+yList,xb+xList);
         blockOffset = blockOffset + 1;
     end
 end
