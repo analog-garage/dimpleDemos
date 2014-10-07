@@ -33,7 +33,6 @@ map.put('dataset', 'art_scaled');  % Source image pair
 % Set solver and solver-specific parameters
 fg.Solver = solver;
 fg.Solver.setNumIterations(1);
-fg.Solver.setDefaultOptimizedUpdateEnabled(true);
 
 % Solve
 fprintf('Starting solver (BP)\n');

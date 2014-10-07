@@ -61,7 +61,6 @@ Vs.Input = likelihoods;
 % Set solver and solver-specific parameters
 fg.Solver = solver;
 fg.Solver.setNumIterations(iterations);
-fg.Solver.setDefaultOptimizedUpdateEnabled(true);
 
 % Solve
 fprintf('Starting solver\n');
