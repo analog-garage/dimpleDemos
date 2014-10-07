@@ -1,41 +1,36 @@
 package com.analog.lyric.clouds;
 
 import com.analog.lyric.dimple.factorfunctions.core.FactorFunction;
-import com.analog.lyric.dimple.factorfunctions.core.FactorFunctionUtilities;
+import com.analog.lyric.dimple.model.values.Value;
 
 public class EdgeFactorFunction extends FactorFunction 
 {
 
-	public EdgeFactorFunction() 
-	{
-		super("Edge Factor Function");
-		
-	}
-	
 	@Override
-	public double evalEnergy(Object ... args)
+	public double evalEnergy(Value[] args)
 	{
-		double [][] top = FactorFunctionUtilities.toDouble2DArray(args[0]);
-		double [][] bottom = FactorFunctionUtilities.toDouble2DArray(args[1]);
-		double [] distribution = FactorFunctionUtilities.toDoubleArray(args[2]);
-		double hdelta = FactorFunctionUtilities.toDouble(args[3]);
-		boolean leftRight = FactorFunctionUtilities.toBoolean(args[4]);
-		boolean useDist = FactorFunctionUtilities.toBoolean(args[5]);
+		int index = 0;
+		double [][] top = (double[][])args[index++].getObject();
+		double [][] bottom = (double[][])args[index++].getObject();
+		double [] distribution = args[index++].getDoubleArray();
+		double hdelta = args[index++].getDouble();
+		boolean leftRight = args[index++].getBoolean();
+		boolean useDist = args[index++].getBoolean();
 		
 		double diff = 0;
+		double topLength = top[0].length;
 		
 		if (leftRight)
 		{
-			for (int i = 0; i < top[0].length; i++)
+			for (int i = 0; i < topLength; i++)
 			{
 				double tmp = top[1][i] - bottom[0][i];			
 				diff = tmp*tmp;
 			}
-			
 		}
 		else
 		{
-			for (int i = 0; i < top[0].length; i++)
+			for (int i = 0; i < topLength; i++)
 			{
 				double tmp = top[3][i] - bottom[2][i];			
 				diff = tmp*tmp;
@@ -50,7 +45,6 @@ public class EdgeFactorFunction extends FactorFunction
 			return -Math.log(distribution[ind]);
 		else
 			return diff;
-		
 	}
 
 }
