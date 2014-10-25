@@ -85,6 +85,7 @@ end
 
 %% Run EM
 disp('running EM...');
+
 fg.baumWelch({guessT,guessE},numRestarts,numReEstimations);
 
 %% Examine results

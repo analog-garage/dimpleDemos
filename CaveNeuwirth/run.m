@@ -14,4 +14,7 @@
 %   limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 cave_neuwirth;

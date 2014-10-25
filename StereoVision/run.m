@@ -16,6 +16,9 @@
 
 function run()
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 solver = 'SumProduct';
 showIntermedateResults = true;
 iterations = 25;          % Number of iterations of BP
@@ -32,8 +35,8 @@ map.put('dataset', 'art_scaled');  % Source image pair
 
 % Set solver and solver-specific parameters
 fg.Solver = solver;
-fg.Solver.setNumIterations(1);
-fg.Solver.setDefaultOptimizedUpdateEnabled(true);
+fg.NumIterations = 1;
+fg.setOption('BPOptions.updateApproach', 'OPTIMIZED');
 
 % Solve
 fprintf('Starting solver (BP)\n');

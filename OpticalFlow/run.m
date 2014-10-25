@@ -14,6 +14,9 @@
 %   limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 %%%%%%%%%%%%%%%%% Set Parameters %%%%%%%%%%%%%%%%%%%%
 
 %Similarity
@@ -132,7 +135,7 @@ drawnow();
 
 
 disp('solving...');
-fg.Solver.setDamping(damping);
+fg.setOption('BPOptions.damping', damping);
 fg.Solver.useMultithreading(true);
 fg.initialize();
 

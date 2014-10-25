@@ -1,5 +1,8 @@
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 %% Add the EdgeFactorFunction java class to the path. 
-javaaddpath('./bin');
+javaaddpath('./build/classes/main');
 
 %% Set parameters
 disp('setting params...');
@@ -229,9 +232,9 @@ if solveOnce
     numRestarts = 4;
     burnIn = 10;
     
-    fg.Solver.setNumSamples(numSamples);
-    fg.Solver.setNumRestarts(numRestarts);
-    fg.Solver.setBurnInUpdates(burnIn);
+    fg.setOption('GibbsOptions.numSamples', numSamples);
+    fg.setOption('GibbsOptions.numRandomRestarts', numRestarts);
+    fg.setOption('GibbsOptions.burnInScans', burnIn);
     
     tic
     fg.solve();
@@ -243,15 +246,15 @@ else
     numRestarts = 0;
     burnIn = 0;
     
-    fg.Solver.setNumSamples(numSamples);
-    fg.Solver.setNumRestarts(numRestarts);
-    fg.Solver.setBurnInUpdates(burnIn);
+    fg.setOption('GibbsOptions.numSamples', numSamples);
+    fg.setOption('GibbsOptions.numRandomRestarts', numRestarts);
+    fg.setOption('GibbsOptions.burnInScans', burnIn);
     
     fg.initialize();
     fg.Solver.burnIn();
 
 
-    while 1
+    for iteration = 1:10
         tic
         fg.Solver.sample(numSamples);
         toc

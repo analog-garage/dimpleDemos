@@ -16,6 +16,9 @@
 
 function run()
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 % Graph parameters
 numStates = 4;                      % Number of states in the HMM
 numObsValues = 4;                   % Number of states in the observed value
@@ -79,9 +82,9 @@ disp('Gibbs sampler parameter estimation');
 disp('******************************************************************');
 fg = FactorGraph();
 fg.Solver = 'gibbs';
-fg.Solver.setNumSamples(numSamples);
-fg.Solver.setScansPerSample(scansPerSample);
-fg.Solver.setBurnInScans(burnInScans);
+fg.setOption('GibbsOptions.numSamples', numSamples);
+fg.setOption('GibbsOptions.scansPerSample', scansPerSample);
+fg.setOption('GibbsOptions.burnInScans', burnInScans);
 
 % Variables
 A = RealJoint(numStates, 1, numStates);         % Transition matrix
@@ -97,7 +100,7 @@ fg.addFactorVectorized('DiscreteTransition', state(2:end), state(1:end-1), {A,[]
 state.Input = obsMatrix(obsRealization,:);
 
 if (plotScore)
-    fg.Solver.saveAllScores();  % Save scores
+    fg.setOption('GibbsOptions.saveAllScores', true);  % Save scores
 end
 
 if (repeatable)
@@ -133,7 +136,7 @@ disp('Baum-Welch parameter estimation');
 disp('******************************************************************');
 fg2 = FactorGraph();
 fg2.Solver = 'sumproduct';
-fg2.Solver.setNumIterations(1);
+fg2.NumIterations = 1;
 
 % Variables
 state2 = Discrete(0:numStates-1,1,hmmLength);

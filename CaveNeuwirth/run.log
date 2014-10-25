@@ -1,0 +1,14 @@
+MATLAB is running in headless mode.  Figure windows will not be displayed.
+ 
+To get started, type one of these: helpwin, helpdesk, or demo.
+For product information, visit www.mathworks.com.
+ 
+N=1200, H=2, A=27
+numReEstimations=25, numRestarts=100
+running EM...
+results...
+=====  Cluster 1  =====
+ a e f i l m n o q r y _
+=====  Cluster 2  =====
+ b c d g h j k p s t u v w x z
+Elapsed time is 35.847391 seconds.

@@ -14,6 +14,9 @@
 %   limitations under the License.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 %Set parameters
 iterations = 20;
 depth = 75;
@@ -100,6 +103,7 @@ variables.Input = input;
 disp('solving...');
 fg.initialize();
 fg.Solver.useMultithreading(true);
+fg.setOption('BPOptions.updateApproach', 'OPTIMIZED');
 for i = 1:iterations
     fprintf('iteration %d\n',i);
     tic

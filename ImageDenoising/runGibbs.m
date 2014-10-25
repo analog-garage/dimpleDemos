@@ -16,6 +16,9 @@
 
 function runGibbs()
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 solver = 'Gibbs';
 showIntermedateResults = true;
 imageDimension = 200;       % Size of each dimension of the image section
@@ -62,9 +65,9 @@ Vs.Input = likelihoods;
 
 % Set solver and solver-specific parameters
 fg.Solver = solver;
-fg.Solver.setNumSamples(numSamples);
-fg.Solver.setScansPerSample(scansPerSample);
-fg.Solver.setBurnInScans(burnInScans);
+fg.setOption('GibbsOptions.numSamples', numSamples);
+fg.setOption('GibbsOptions.scansPerSample', scansPerSample);
+fg.setOption('GibbsOptions.burnInScans', burnInScans);
 
 % Solve
 fprintf('Starting solver (Gibbs)\n');

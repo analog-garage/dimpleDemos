@@ -16,6 +16,9 @@
 
 function runGibbs()
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 solver = 'Gibbs';
 showIntermedateResults = true;
 numSamples = 250;           % Number of Gibbs samples

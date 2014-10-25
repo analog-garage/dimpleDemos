@@ -16,6 +16,9 @@
 
 function run()
 
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
+setupDimpleDemos();
+
 solver = 'SumProduct';
 showIntermedateResults = true;
 imageDimension = 100;       % Size of each dimension of the image section
@@ -60,8 +63,7 @@ Vs.Input = likelihoods;
 
 % Set solver and solver-specific parameters
 fg.Solver = solver;
-fg.Solver.setNumIterations(iterations);
-fg.Solver.setDefaultOptimizedUpdateEnabled(true);
+fg.NumIterations = iterations;
 
 % Solve
 fprintf('Starting solver\n');
