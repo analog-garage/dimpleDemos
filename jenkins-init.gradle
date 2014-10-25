@@ -50,10 +50,8 @@ rootProject {
 }
 
 allprojects {
-	if (it.getPath() == ':java') {
-		it.ext.jenkins = true
-		repositories {
-			flatDir dirs: ["${dimpleDir}/solvers/lib"]
-		}
+	it.ext.jenkins = true
+	repositories {
+		flatDir dirs: ["${dimpleDir}/solvers/lib"]
 	}
 }

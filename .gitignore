@@ -1,2 +1,4 @@
 compareGraphsResults.txt
 *~
+.gradle
+*.log
