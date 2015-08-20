@@ -1,6 +1,6 @@
 function setupDimpleDemos()
 
-    if ~exist('testDimple')
+    if true || ~exist('testDimple') % FIXME - this test is no longer working!
         thisdir = fileparts(mfilename('fullpath'));
         p = pwd();
         jenkinsDimple = fullfile(thisdir, 'jenkins', 'dimple')
@@ -9,6 +9,7 @@ function setupDimpleDemos()
         else
         	cd(fullfile(thisdir, '..', 'dimple'));
         end
+        pwd()
         startup();
         cd(p);
     end
