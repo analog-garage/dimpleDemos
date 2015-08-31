@@ -42,6 +42,7 @@ rootProject {
 	}
 
 
+    jenkinsClean.execute()
 	unzipDimpleKit.execute()
 
 	task jenkinsClean(type: Delete) {
