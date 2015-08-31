@@ -41,13 +41,13 @@ rootProject {
 		into dimpleDir
 	}
 
+	task jenkinsClean(type: Delete) {
+		delete jenkinsDir
+	}
 
     jenkinsClean.execute()
 	unzipDimpleKit.execute()
 
-	task jenkinsClean(type: Delete) {
-		delete jenkinsDir
-	}
 }
 
 allprojects {
